@@ -4,4 +4,13 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodacyChallenge.Common\CodacyChallenge.Common.csproj" />
+    <ProjectReference Include="..\CodacyChallenge.Utils\CodacyChallenge.Utils.csproj" />
+  </ItemGroup>
+
 </Project>

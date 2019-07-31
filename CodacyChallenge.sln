@@ -3,9 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28306.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodacyChallenge", "CodacyChallenge\CodacyChallenge.csproj", "{59140FD8-15EA-4D1A-8225-6F7A7A09E87F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodacyChallenge.Service", "CodacyChallenge.Service\CodacyChallenge.Service.csproj", "{D37EE6BA-B870-4581-82C6-159D6BA81180}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodacyChallenge.Service", "CodacyChallenge.Service\CodacyChallenge.Service.csproj", "{D37EE6BA-B870-4581-82C6-159D6BA81180}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodacyChallenge.Common", "CodacyChallenge.Common\CodacyChallenge.Common.csproj", "{699E8334-1C56-4522-91D6-28FAF54AD97C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodacyChallenge.Utils", "CodacyChallenge.Utils\CodacyChallenge.Utils.csproj", "{6E11EAA5-88D1-4F85-970E-71B9A04AE125}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodacyChallenge.ConsoleApplication", "CodacyChallenge.ConsoleApplication\CodacyChallenge.ConsoleApplication.csproj", "{9BCC8E68-AFBF-477D-85E7-75AE00133273}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - ConsoleApplication", "2 - ConsoleApplication", "{19D3D385-0584-4B6D-A99D-5E70730761CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Common", "4 - Common", "{D1EB5C48-36EB-408F-88D7-872579AEC886}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Service", "3 - Service", "{5128BFEA-1E12-400A-83F2-2D223B13B32F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - API", "1 - API", "{B4FF9E0F-37D5-4FC5-924F-CAD75E6732A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Utils", "5 - Utils", "{1EFAA7EB-1BDD-4B7D-9252-6CBBE43A82B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,17 +27,31 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{59140FD8-15EA-4D1A-8225-6F7A7A09E87F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59140FD8-15EA-4D1A-8225-6F7A7A09E87F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59140FD8-15EA-4D1A-8225-6F7A7A09E87F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59140FD8-15EA-4D1A-8225-6F7A7A09E87F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D37EE6BA-B870-4581-82C6-159D6BA81180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D37EE6BA-B870-4581-82C6-159D6BA81180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D37EE6BA-B870-4581-82C6-159D6BA81180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D37EE6BA-B870-4581-82C6-159D6BA81180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{699E8334-1C56-4522-91D6-28FAF54AD97C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{699E8334-1C56-4522-91D6-28FAF54AD97C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{699E8334-1C56-4522-91D6-28FAF54AD97C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{699E8334-1C56-4522-91D6-28FAF54AD97C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E11EAA5-88D1-4F85-970E-71B9A04AE125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E11EAA5-88D1-4F85-970E-71B9A04AE125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E11EAA5-88D1-4F85-970E-71B9A04AE125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E11EAA5-88D1-4F85-970E-71B9A04AE125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BCC8E68-AFBF-477D-85E7-75AE00133273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BCC8E68-AFBF-477D-85E7-75AE00133273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BCC8E68-AFBF-477D-85E7-75AE00133273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BCC8E68-AFBF-477D-85E7-75AE00133273}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D37EE6BA-B870-4581-82C6-159D6BA81180} = {5128BFEA-1E12-400A-83F2-2D223B13B32F}
+		{699E8334-1C56-4522-91D6-28FAF54AD97C} = {D1EB5C48-36EB-408F-88D7-872579AEC886}
+		{6E11EAA5-88D1-4F85-970E-71B9A04AE125} = {1EFAA7EB-1BDD-4B7D-9252-6CBBE43A82B5}
+		{9BCC8E68-AFBF-477D-85E7-75AE00133273} = {19D3D385-0584-4B6D-A99D-5E70730761CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AA4B27B-67BF-40EA-82E6-21E1C0D97988}
