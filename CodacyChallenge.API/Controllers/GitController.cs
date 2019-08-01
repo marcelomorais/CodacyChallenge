@@ -5,6 +5,7 @@ using CodacyChallenge.Common.Models.Exceptions;
 using CodacyChallenge.Utils;
 using CodacyChallenge.Utils.Validators;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -38,7 +39,10 @@ namespace CodacyChallenge.API.Controllers
 
                 var commitList = await apiEngine.GetAllCommits(requestObject.Url).ConfigureAwait(false);
 
-                return Ok(commitList.Paginate(requestObject));
+                //This line is only to filter and remove the null fields from the Json object.
+                var filteredResponse = JsonConvert.SerializeObject(commitList.Paginate(requestObject));
+
+                return Ok(filteredResponse);
             }
             catch (HttpRequestException)
             {
@@ -46,7 +50,10 @@ namespace CodacyChallenge.API.Controllers
 
                 var commitList = await cliEngine.GetAllCommits(requestObject.Url).ConfigureAwait(false);
 
-                return Ok(commitList.Paginate(requestObject));
+                //This line is only to filter and remove the null fields from the Json object.
+                var filteredResponse = JsonConvert.SerializeObject(commitList.Paginate(requestObject));
+
+                return Ok(filteredResponse);
             }
             catch (CLIException ex)
             {

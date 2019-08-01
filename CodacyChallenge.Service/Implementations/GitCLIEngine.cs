@@ -12,6 +12,7 @@ namespace CodacyChallenge.Service.Implementations
 {
     public class GitCLIEngine : IGitEngine
     {
+        //This Class will return a simplified version of the commits using the pretty format built on GitCommand class.
         public Task<List<GitResponse>> GetAllCommits(string url)
         {
             var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());

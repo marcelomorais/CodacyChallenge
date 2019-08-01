@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -20,31 +22,40 @@ namespace CodacyChallenge.API
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-          services.AddOptions()
-          .Configure<GitHubEndpoints>(options => Configuration.GetSection("GitHubApi").Bind(options))
-          .AddTransient<GitCLIEngine>()
-          .AddTransient<GitAPIEngine>()
-          .AddTransient<Func<RequestType, IGitEngine>>(serviceProvider => key =>
-          {
-              switch (key)
-              {
-                  case RequestType.CLI:
-                      return serviceProvider.GetService<GitCLIEngine>();
-                  case RequestType.API:
-                      return serviceProvider.GetService<GitAPIEngine>();
-                  default:
-                      throw new KeyNotFoundException();
-              }
-          })
-            .BuildServiceProvider();
+            services.AddOptions()
+            .Configure<GitHubEndpoints>(options => Configuration.GetSection("GitHubApi").Bind(options))
+            .AddTransient<GitCLIEngine>()
+            .AddTransient<GitAPIEngine>()
+            .AddTransient<Func<RequestType, IGitEngine>>(serviceProvider => key =>
+            {
+                switch (key)
+                {
+                    case RequestType.CLI:
+                        return serviceProvider.GetService<GitCLIEngine>();
+                    case RequestType.API:
+                        return serviceProvider.GetService<GitAPIEngine>();
+                    default:
+                        throw new KeyNotFoundException();
+                }
+            })
+              .BuildServiceProvider();
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                TypeNameHandling = TypeNameHandling.None,
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore
+            };
+
         }
-        
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
