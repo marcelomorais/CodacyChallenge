@@ -15,72 +15,72 @@ namespace CodacyChallenge.Application
     {
         private IGitEngine _gitEngine;
         private Configuration _configuration;
-        private int page = 1;
-
+        private RequestObject _request;
+        private int _totalPages = 0;
         public StartApplication(IOptions<Configuration> configuration, IGitEngine gitEngine)
         {
             _configuration = configuration.Value;
             _gitEngine = gitEngine;
+            _request = new RequestObject { PageSize = _configuration.ItemsPerPage, PageNumber = 1 };
         }
         public async Task Execute(string url)
         {
-            Console.WriteLine("Pulling commits...\n");
+            Console.WriteLine("Pulling commits, it can take a few minutes...\n");
 
-            var commits = await _gitEngine.GetAllCommits(url);
+            _request.Url = url;
 
-            var commitList = commits.BreakInPages(_configuration.ItemsPerPage);
+            var commits = await _gitEngine.GetCommitsWithPagination(_request);
 
-            if (commitList.Any())
+            _totalPages = (commits.Count + _request.PageSize - 1) / _request.PageSize;
+
+            if (commits.Any())
             {
-                CallNextPage(commitList);
+                CallNextPage(commits);
             }
         }
 
-        private void CallNextPage(List<List<GitResponse>> commitList)
+        private void CallNextPage(List<GitResponse> commitList)
         {
-            if (page <= commitList.Count)
+            var paginatedCommits = commitList.Paginate(_request);
+
+            if (_request.PageNumber <= _totalPages)
             {
-                foreach (var item in commitList.Skip(page - 1).Take(1))
+                commitList.ForEach(x =>
                 {
-                    item.ForEach(x =>
-                    {
-                        Console.WriteLine(JsonConvert.SerializeObject(x));
-                    });
-                }
+                    Console.WriteLine(JsonConvert.SerializeObject(x));
+                });
 
-                Console.WriteLine($"\nThis Repository has a total of {commitList.Count} pages with max {_configuration.ItemsPerPage} elements per page.");
+                Console.WriteLine($"\nThis Repository has a total of {_totalPages} pages with max {_configuration.ItemsPerPage} elements per page.");
                 Console.WriteLine($"Enter the page number that you want to see or press N to go to the next page.");
-                Console.WriteLine($"You are in the page: {page}.\n");
-
-                CheckPressedKey();
-                CallNextPage(commitList);
+                Console.WriteLine($"You are in the page: {_request.PageNumber}.\n");
             }
             else
             {
-                Console.WriteLine($"\nThe page {page} does not exist.\n");
-                Console.WriteLine($"Please try a different page or press ESC to exit.\n");
-                CheckPressedKey();
-                CallNextPage(commitList);
+                Console.WriteLine($"\nThe page {_request.PageNumber} does not exist.\n");
+                Console.WriteLine($"Please try a different page number or enter X to exit.\n");
             }
 
+
+            CheckPressedKey();
+            CallNextPage(commitList);
         }
 
         private void CheckPressedKey()
         {
-            int result = page;
-            var keyPressed = new ConsoleKeyInfo();
+            int result = _request.PageNumber;
+            string keyPressed = string.Empty;
 
-            while (!(keyPressed.Key == ConsoleKey.N || int.TryParse(keyPressed.KeyChar.ToString(), out result)))
+            while (!(keyPressed == "n" || int.TryParse(keyPressed, out result)))
             {
-                keyPressed = Console.ReadKey(true);
+                keyPressed = Console.ReadLine().ToLowerInvariant();
 
-                if (keyPressed.Key == ConsoleKey.Escape)
+                if (keyPressed == "x")
                 {
                     Environment.Exit(0);
                 }
             }
 
-            page = keyPressed.Key == ConsoleKey.N ? page + 1 : result;
+            _request.PageNumber = keyPressed == "n" ? _request.PageNumber + 1 : result;
         }
     }
 }

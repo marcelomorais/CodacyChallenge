@@ -9,6 +9,5 @@ namespace CodacyChallenge.Common.Models
         public RequestType RequestType { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 20;
-
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CodacyChallenge.Common.Interfaces
+﻿namespace CodacyChallenge.Common.Interfaces
 {
     public interface IPagination
     {

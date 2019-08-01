@@ -1,4 +1,5 @@
-﻿using CodacyChallenge.Common.Enumerators;
+﻿using CodacyChallenge.API.Mappers;
+using CodacyChallenge.Common.Enumerators;
 using CodacyChallenge.Common.Interfaces;
 using CodacyChallenge.Common.Models;
 using CodacyChallenge.Common.Models.Exceptions;
@@ -37,21 +38,26 @@ namespace CodacyChallenge.API.Controllers
             {
                 var apiEngine = _gitEngine(requestObject.RequestType);
 
-                var commitList = await apiEngine.GetAllCommits(requestObject.Url).ConfigureAwait(false);
+                var commitList = await apiEngine.GetCommitsWithPagination(requestObject).ConfigureAwait(false);
+
+                var responseObject = commitList.Paginate(requestObject).ToResponseObject(requestObject);
 
                 //This line is only to filter and remove the null fields from the Json object.
-                var filteredResponse = JsonConvert.SerializeObject(commitList.Paginate(requestObject));
+                var filteredResponse = JsonConvert.SerializeObject(responseObject);
 
                 return Ok(filteredResponse);
             }
+            //If GitHub API return any error or exception we will go to git CLI to get the commit list
             catch (HttpRequestException)
             {
                 var cliEngine = _gitEngine(RequestType.CLI);
 
-                var commitList = await cliEngine.GetAllCommits(requestObject.Url).ConfigureAwait(false);
+                var commitList = await cliEngine.GetCommitsWithPagination(requestObject).ConfigureAwait(false);
+
+                var responseObject = commitList.Paginate(requestObject).ToResponseObject(requestObject);
 
                 //This line is only to filter and remove the null fields from the Json object.
-                var filteredResponse = JsonConvert.SerializeObject(commitList.Paginate(requestObject));
+                var filteredResponse = JsonConvert.SerializeObject(responseObject);
 
                 return Ok(filteredResponse);
             }

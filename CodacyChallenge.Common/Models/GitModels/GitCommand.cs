@@ -16,7 +16,7 @@
     {
 
         //I need to put the  so that I can replace it to double quotes after the PowerShell return my object because the it's scaping the double quotes... 
-        private static string _format { get { return "{\"^^Sha^^\":\"^^%H^^\", \"^^Commit^^\":{\"^^Subject^^\":\"^^%s^^\", \"^^Author^^\":{\"^^Name^^\":\"^^%an^^\",\"^^Email^^\":\"^^%ae^^\",\"^^Date^^\":\"^^%aD^^\"}, \"^^Committer^^\":{\"^^Name^^\":\"^^%cn^^\",\"^^Email^^\":\"^^%ce^^\",\"^^Date^^\":\"^^%cD^^\"}}}"; } }
+        private static string _format { get { return "{\"^^Sha^^\":\"^^%H^^\", \"^^Commit^^\":{\"^^Subject^^\":\"^^%f^^\", \"^^Author^^\":{\"^^Name^^\":\"^^%an^^\",\"^^Email^^\":\"^^%ae^^\",\"^^Date^^\":\"^^%aD^^\"}, \"^^Committer^^\":{\"^^Name^^\":\"^^%cn^^\",\"^^Email^^\":\"^^%ce^^\",\"^^Date^^\":\"^^%cD^^\"}}}"; } }
 
         public static string Clone = "git clone";
         public static string Log = "git log";

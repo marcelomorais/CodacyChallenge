@@ -27,9 +27,8 @@ namespace CodacyChallenge.ConsoleApplication.Configuration
                 Formatting = Formatting.Indented,
                 TypeNameHandling = TypeNameHandling.None,
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore,
             };
-
 
             return serviceProvider;
         }

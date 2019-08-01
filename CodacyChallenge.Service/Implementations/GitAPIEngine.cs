@@ -21,13 +21,15 @@ namespace CodacyChallenge.Service.Implementations
             _apiClient = new ApiClient();
         }
 
-        public async Task<List<GitResponse>> GetAllCommits(string url)
+        public async Task<List<GitResponse>> GetCommitsWithPagination(RequestObject request)
         {
-            var splittedUrl = url.Split('/').ToList().TakeLast(2);
-            var requestUrl = string.Format(_gitHubSettings.GetAllCommits, splittedUrl.FirstOrDefault(), splittedUrl.LastOrDefault());
+            var splittedUrl = request.Url.Split('/').ToList().TakeLast(2);
+            var requestUrl = string.Concat(string.Format(_gitHubSettings.GetAllCommits, splittedUrl.FirstOrDefault(), splittedUrl.LastOrDefault()), $"?per_page={request.PageSize}");
             var commits = await _apiClient.GetAsync<List<GitResponse>>(new Uri(requestUrl)).ConfigureAwait(false);
 
             return commits;
         }
+
+
     }
 }

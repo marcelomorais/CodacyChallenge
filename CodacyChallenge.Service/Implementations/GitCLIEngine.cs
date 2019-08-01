@@ -13,7 +13,7 @@ namespace CodacyChallenge.Service.Implementations
     public class GitCLIEngine : IGitEngine
     {
         //This Class will return a simplified version of the commits using the pretty format built on GitCommand class.
-        public Task<List<GitResponse>> GetAllCommits(string url)
+        public Task<List<GitResponse>> GetCommitsWithPagination(RequestObject request)
         {
             var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             var commitList = new List<GitResponse>();
@@ -21,7 +21,7 @@ namespace CodacyChallenge.Service.Implementations
 
             using (PowerShell powershell = PowerShell.Create())
             {
-                powershell.AddScript($"{GitCommand.Clone} {url} '{tempDirectory}'");
+                powershell.AddScript($"{GitCommand.Clone} {request.Url} '{tempDirectory}'");
                 powershell.AddScript($"cd '{tempDirectory}'");
                 powershell.AddScript($"{GitCommand.Log} {GitCommand.PrettyFormat}");
 
@@ -29,7 +29,7 @@ namespace CodacyChallenge.Service.Implementations
 
                 //This condition is because the powershell identify the clone command as an error and always return the "HadError" property as true
                 //so I need to validate if we have more than one error in our stream.
-                if (powershell.Streams.Error.Count > 1)
+                if (!results.Any() && powershell.HadErrors)
                 {
                     throw new CLIException(powershell.Streams);
                 }

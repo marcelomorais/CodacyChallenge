@@ -7,19 +7,15 @@ namespace CodacyChallenge.Utils
 {
     public static class ListExtensions
     {
-        public static List<List<T>> BreakInPages<T>(this List<T> source, int itemsPerPage)
-        {
-            return source
-                .Select((x, i) => new { Index = i, Value = x })
-                .GroupBy(x => x.Index / itemsPerPage)
-                .Select(x => x.Select(v => v.Value).ToList())
-                .ToList();
-        }
-
-        public static List<T> TakeLast<T>(this List<T> source, int N)
-        {
-            return source.Skip(Math.Max(0, source.Count() - N)).ToList();
-        }
+        //This method is used only on Console Application so that the pagination can be controlled by the configuration file "config.json"
+        //public static List<List<T>> BreakInPages<T>(this List<T> source, int itemsPerPage)
+        //{
+        //    return source
+        //        .Select((x, i) => new { Index = i, Value = x })
+        //        .GroupBy(x => x.Index / itemsPerPage)
+        //        .Select(x => x.Select(v => v.Value).ToList())
+        //        .ToList();
+        //}
 
         public static List<T> Paginate<T>(this List<T> source, IPagination pagination)
         {

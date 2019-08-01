@@ -6,6 +6,6 @@ namespace CodacyChallenge.Common.Interfaces
 {
     public interface IGitEngine
     {
-        Task<List<GitResponse>> GetAllCommits(string url);
+        Task<List<GitResponse>> GetCommitsWithPagination(RequestObject request);
     }
 }
