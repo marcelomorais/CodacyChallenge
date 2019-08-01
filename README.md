@@ -10,7 +10,7 @@ OBS: I built as a plus a Console Application that provide in an easy way the com
 
 ## Getting Started
 
-#Console Application
+# Console Application
 
 If you are interested to run the Console Application, after clone the project you can open the "PublishedChallenge" folder and open your CMD inside it, now you can run
  "dotnet CodacyChallenge.ConsoleApplication.dll YOURURL".
@@ -19,7 +19,7 @@ If you are interested to run the Console Application, after clone the project yo
 
 For this project you can configure the Page Size on config.json at CodacyChallenge.Common Project.
 
- #WebApi
+ # WebApi
 
  To run the WebApi project just need to set the CodacyChallenge.API as StartUp project and press F5 to run.
 
@@ -35,20 +35,20 @@ For this project you can configure the Page Size on config.json at CodacyChallen
  - pageSize (int)
  - pageNumber (int)
 
-#Configuration File
+# Configuration File
 You can easily configure the GitHub endpoint using the configuration file "config.json" on CodacyChallenge.Common project
 
- ##Tests
+ ## Tests
 
  To run the tests in an easy way you can open the main folder, run the CMD and run "dotnet test". You can also open the solution and run the tests there :)
 
 
-##Different approaches
+## Different approaches
 
 Github API has some limitations like get only 100 commits per time... to get the "next page" we need to pass the last SHA of the previous request and the pagesize that you want... I didn't implement this approach because I think that could be over engineering for this challenge regarding that it isn't on the requirements.
 
 
-##Observations
+## Observations
 On GitAPIEngine.cs file you will found a commented code that is related to add in cache to handle with GitHub pagination, because I just found on GitHub api one way to paginate that is passing the SHA to get the commits after this one. If you want do uncomment it , it's working perfectly but I didn't keep because I though that was over engineering. Sorry about the mess on this file.
 
 
