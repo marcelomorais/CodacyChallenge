@@ -40,10 +40,9 @@ namespace CodacyChallenge.API.Controllers
 
                 return Ok(response);
             }
-            //If GitHub API return any error or exception we will go to git CLI to get the commit list
+            //If GitHub API return a TimeoutException or HttpRequestException we will go to git CLI to get the commit list
             catch (Exception ex) when (ex is TimeoutException || ex is HttpRequestException)
             {
-
                 try
                 {
                     var response = await RunService(RequestType.CLI, requestObject);
@@ -54,7 +53,6 @@ namespace CodacyChallenge.API.Controllers
                 {
                     return StatusCode(500, x.StreamErrors);
                 }
-
             }
             catch (KeyNotFoundException ex)
             {
@@ -73,7 +71,7 @@ namespace CodacyChallenge.API.Controllers
 
             var commitList = await gitEngine.GetCommitsWithPagination(requestObject).ConfigureAwait(false);
 
-            var responseObject = commitList.Paginate(requestObject).ToResponseObject(requestObject);
+            var responseObject = commitList.ToResponseObject(requestObject);
 
             //This line is only to filter and remove the null fields from the Json object.
             var filteredResponse = JsonConvert.SerializeObject(responseObject);

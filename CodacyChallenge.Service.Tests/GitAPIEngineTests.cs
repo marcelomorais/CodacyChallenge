@@ -4,6 +4,7 @@ using CodacyChallenge.API.Client;
 using CodacyChallenge.Common.Models;
 using CodacyChallenge.Common.Models.Configuration;
 using CodacyChallenge.Service.Implementations;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

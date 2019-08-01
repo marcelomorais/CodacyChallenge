@@ -50,8 +50,8 @@ namespace CodacyChallenge.Application
                     Console.WriteLine(JsonConvert.SerializeObject(x));
                 });
 
-                Console.WriteLine($"\nThis Repository has a total of {_totalPages} pages with max {_configuration.ItemsPerPage} elements per page.");
-                Console.WriteLine($"You are in the page: {_request.PageNumber}.\n");
+                Console.WriteLine($"\nThis Repository has a total of {_totalPages} pages with max of {_configuration.ItemsPerPage} elements per page.");
+                Console.WriteLine($"You are on the page: {_request.PageNumber}.\n");
                 Console.WriteLine($"N - Next Page\nX - Exit\nOr enter the page number.");
                 Console.WriteLine($"Press X to exit.\n");
             }
