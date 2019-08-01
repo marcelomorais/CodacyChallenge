@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CodacyChallenge.Application
 {
@@ -21,14 +22,11 @@ namespace CodacyChallenge.Application
             _configuration = configuration.Value;
             _gitEngine = gitEngine;
         }
-        public void Execute(string url)
+        public async Task Execute(string url)
         {
-            Console.WriteLine("Validating your URL...");
-            //Validate the URL here.
-            Console.WriteLine("URL OK.");
-
             Console.WriteLine("Pulling commits...\n");
-            var commits = _gitEngine.GetAllCommits(url);
+
+            var commits = await _gitEngine.GetAllCommits(url);
 
             var commitList = commits.BreakInPages(_configuration.ItemsPerPage);
 
@@ -38,7 +36,7 @@ namespace CodacyChallenge.Application
             }
         }
 
-        private void CallNextPage(List<List<GitCommit>> commitList)
+        private void CallNextPage(List<List<GitResponse>> commitList)
         {
             if (page <= commitList.Count)
             {

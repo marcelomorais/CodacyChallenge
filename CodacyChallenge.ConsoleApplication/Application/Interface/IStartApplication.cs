@@ -1,7 +1,9 @@
-﻿namespace CodacyChallenge.Application
+﻿using System.Threading.Tasks;
+
+namespace CodacyChallenge.Application
 {
     public interface IStartApplication
     {
-        void Execute(string url);
+        Task Execute(string url);
     }
 }

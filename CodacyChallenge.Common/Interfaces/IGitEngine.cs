@@ -1,10 +1,11 @@
 ﻿using CodacyChallenge.Common.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CodacyChallenge.Common.Interfaces
 {
     public interface IGitEngine
     {
-        List<GitCommit> GetAllCommits(string url);
+        Task<List<GitResponse>> GetAllCommits(string url);
     }
 }

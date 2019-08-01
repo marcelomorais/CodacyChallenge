@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Validators\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
@@ -23,12 +19,6 @@
     <ProjectReference Include="..\CodacyChallenge.Common\CodacyChallenge.Common.csproj" />
     <ProjectReference Include="..\CodacyChallenge.Service\CodacyChallenge.Service.csproj" />
     <ProjectReference Include="..\CodacyChallenge.Utils\CodacyChallenge.Utils.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="config.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

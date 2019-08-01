@@ -1,6 +1,6 @@
 ﻿using CodacyChallenge.Application;
 using CodacyChallenge.Common.Interfaces;
-using CodacyChallenge.Service;
+using CodacyChallenge.Service.Implementations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
@@ -29,8 +29,7 @@ namespace CodacyChallenge.ConsoleApplication.Configuration
            .AddJsonFile("config.json",
                        optional: false,
                        reloadOnChange: true);
-
-
+            
             IConfigurationRoot configuration = builder.Build();
 
             return configuration;
