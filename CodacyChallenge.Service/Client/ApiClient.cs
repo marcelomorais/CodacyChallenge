@@ -1,35 +1,32 @@
-﻿using Newtonsoft.Json;
+﻿using CodacyChallenge.Service.Client;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CodacyChallenge.API.Client
 {
-    public class ApiClient
+    public class ApiClient : IApiClient
     {
-        private readonly HttpClient _httpClient;
-        private Uri BaseEndpoint { get; set; }
+        private readonly IHttpClientWrapper _httpClient;
+        private readonly Dictionary<string,string> headers = new Dictionary<string, string> { { "User-Agent", "request" } };
 
-        public ApiClient()
+        public ApiClient(IHttpClientWrapper httpClient)
         {
-            _httpClient = new HttpClient();
+            _httpClient = httpClient;
         }
 
         /// <summary>  
         /// Common method for making GET calls  
         /// </summary>  
-        public async Task<T> GetAsync<T>(Uri requestUrl)
+        public async Task<T> GetAsync<T>(string requestUrl)
         {
-            addHeaders();
-            var response = await _httpClient.GetAsync(requestUrl, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+            _httpClient.AddHeaders(headers);
+            var response = await _httpClient.GetAsync(requestUrl).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             return JsonConvert.DeserializeObject<T>(data);
-        }
-
-        private void addHeaders()
-        {
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "request");
         }
     }
 }

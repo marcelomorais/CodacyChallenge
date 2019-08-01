@@ -12,8 +12,7 @@ namespace CodacyChallenge.API.Mappers
             {
                 PageNumber = pagination.PageNumber,
                 PageSize = pagination.PageSize,
-                Response = responseList,
-                TotalPages = (responseList.Count + pagination.PageSize - 1) / pagination.PageSize
+                Response = responseList
             };
         }
     }

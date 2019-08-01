@@ -65,13 +65,13 @@ namespace CodacyChallenge.API.Controllers
             {
                 return StatusCode(500, ex);
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
-            catch
+            catch(Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex);
             }
 
         }

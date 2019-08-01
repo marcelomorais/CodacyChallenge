@@ -21,21 +21,10 @@ namespace CodacyChallenge.API.Tests
     [TestClass]
     public class GitControllerTests
     {
-        private Mock<Func<RequestType, IGitEngine>> _mockGitEngine;
-        private Mock<IOptions<GitHubEndpoints>> _mockOptions;
-        private Mock<GitAPIEngine> _mockGitApiEngine;
-
-        [TestInitialize]
-        public void Initialise()
-        {
-            _mockOptions = new Mock<IOptions<GitHubEndpoints>>();
-            _mockGitApiEngine = new Mock<GitAPIEngine>();
-            _mockGitEngine = new Mock<Func<RequestType, IGitEngine>>();
-        }
-
         [TestMethod]
         public async Task GetAllCommits_InvalidUrl_BadRequest()
         {
+            var _mockGitEngine = new Mock<Func<RequestType, IGitEngine>>();
             var controller = new GitController(_mockGitEngine.Object);
             var request = new RequestObject { Url = "test", RequestType = RequestType.API };
 
@@ -141,9 +130,9 @@ namespace CodacyChallenge.API.Tests
             var controller = new GitController(mock.Object);
 
             var result = await controller.GetAllCommits(request).ConfigureAwait(false);
-            var status = result.Result as BadRequestResult;
+            var status = result.Result as BadRequestObjectResult;
             
-            Assert.IsInstanceOfType(result.Result, typeof(BadRequestResult));
+            Assert.IsInstanceOfType(result.Result, typeof(BadRequestObjectResult));
             Assert.AreEqual(status.StatusCode, 400);
         }
     }

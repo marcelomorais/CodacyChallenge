@@ -32,3 +32,16 @@ If you are interested to run the Console Application, after clone the project yo
  - Url (string)
  - pageSize (int)
  - pageNumber (int)
+
+ ##Tests
+
+ Each project has your own Test project (all but the Common library ).
+ To run the tests in an easy way you can open the main folder, run the CMD and run "dotnet test". You can also open the solution and run the tests there :)
+
+
+##Different approaches
+
+Github API has some limitations like get only 100 commits per time... to get the "next page" we need to pass the last SHA of the previous request and the pagesize that you want... I didn't implement this approach because I think that could be over engineering for this challenge regarding that it isn't on the requirements.
+
+I hope hear something from you soon!
+Thank you for this opportunity.

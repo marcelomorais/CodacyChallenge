@@ -9,14 +9,19 @@ namespace CodacyChallenge.Common.Models.Exceptions
         public string ErrorMessage { get; set; }
         public List<ErrorRecord> StreamErrors = new List<ErrorRecord>();
 
+        public CLIException()
+        {
+
+        }
+
         public CLIException(string message) : base(message)
         {
 
         }
 
-        public CLIException(PSDataStreams stream)
+        public CLIException(List<ErrorRecord> stream)
         {
-            StreamErrors.AddRange(stream.Error.ReadAll());
+            StreamErrors.AddRange(stream);
         }
     }
 }

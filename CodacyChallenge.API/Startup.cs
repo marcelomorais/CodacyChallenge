@@ -1,6 +1,8 @@
-﻿using CodacyChallenge.Common.Enumerators;
+﻿using CodacyChallenge.API.Client;
+using CodacyChallenge.Common.Enumerators;
 using CodacyChallenge.Common.Interfaces;
 using CodacyChallenge.Common.Models.Configuration;
+using CodacyChallenge.Service.Client;
 using CodacyChallenge.Service.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace CodacyChallenge.API
 {
@@ -34,6 +37,10 @@ namespace CodacyChallenge.API
             .Configure<GitHubEndpoints>(options => Configuration.GetSection("GitHubApi").Bind(options))
             .AddTransient<GitCLIEngine>()
             .AddTransient<GitAPIEngine>()
+            .AddSingleton<HttpClient>(new HttpClient())
+            .AddSingleton<IApiClient, ApiClient>()
+            .AddSingleton<IPowershellWrapper, PowershellWrapper>()
+            .AddSingleton<IHttpClientWrapper, HttpClientWrapper>()
             .AddTransient<Func<RequestType, IGitEngine>>(serviceProvider => key =>
             {
                 switch (key)
