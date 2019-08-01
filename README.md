@@ -42,15 +42,5 @@ You can easily configure the GitHub endpoint using the configuration file "confi
 
  To run the tests in an easy way you can open the main folder, run the CMD and run "dotnet test". You can also open the solution and run the tests there :)
 
-
-# Different approaches
-
-Github API has some limitations like get only 100 commits per time... to get the "next page" we need to pass the last SHA of the previous request and the pagesize that you want... I didn't implement this approach because I think that could be over engineering for this challenge regarding that it isn't on the requirements.
-
-
-# Observations
-On GitAPIEngine.cs file you will found a commented code that is related to add in cache to handle with GitHub pagination, because I just found on GitHub api one way to paginate that is passing the SHA to get the commits after this one. If you want do uncomment it , it's working perfectly but I didn't keep because I though that was over engineering. Sorry about the mess on this file.
-
-
 I hope hear something from you soon!
 Thank you for this opportunity.
