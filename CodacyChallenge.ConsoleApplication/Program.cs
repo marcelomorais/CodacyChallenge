@@ -27,19 +27,23 @@ namespace CodacyChallenge.ConsoleApplication
 
             Console.WriteLine("Validating your URL...");
 
-            if (!Validator.ValidateUrl(RequestType.Shell ,input))
+            if (!Validator.ValidateUrl(RequestType.CLI, input))
             {
                 Console.WriteLine("Your Repository URL does not match with the requirements.");
-                Console.WriteLine("Please be sure that your URL is from valid a GitHub Repository.");
+                Console.WriteLine("Please be sure that your URL is from a valid GitHub Repository and reopen the program.");
+
+                Console.Read();
             }
+            else
+            {
+                Console.WriteLine("URL OK.");
 
-            Console.WriteLine("URL OK.");
+                var serviceBuilder = new DependencyInjection().ServiceBuilder();
 
-            var serviceBuilder = new DependencyInjection().ServiceBuilder();
+                var application = serviceBuilder.GetService<IStartApplication>();
 
-            var application = serviceBuilder.GetService<IStartApplication>();
-
-            application.Execute(input);
+                application.Execute(input);
+            }
         }
     }
 }

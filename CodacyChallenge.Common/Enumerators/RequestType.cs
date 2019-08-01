@@ -3,7 +3,7 @@
     public enum RequestType
     {
         Unknown,
-        Shell,
+        CLI,
         API
     }
 }

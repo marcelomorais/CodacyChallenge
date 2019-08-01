@@ -11,7 +11,7 @@ namespace CodacyChallenge.Utils.Validators
                 return false;
             }
 
-            if (requestType == RequestType.Shell && !url.Contains(".git", System.StringComparison.InvariantCultureIgnoreCase))
+            if (url.Split('/').Length != 5)
             {
                 return false;
             }

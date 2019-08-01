@@ -34,7 +34,7 @@ namespace CodacyChallenge.API
           {
               switch (key)
               {
-                  case RequestType.Shell:
+                  case RequestType.CLI:
                       return serviceProvider.GetService<GitCLIEngine>();
                   case RequestType.API:
                       return serviceProvider.GetService<GitAPIEngine>();

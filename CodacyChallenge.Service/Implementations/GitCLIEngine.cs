@@ -1,7 +1,7 @@
 ﻿using CodacyChallenge.Common.Interfaces;
 using CodacyChallenge.Common.Models;
+using CodacyChallenge.Common.Models.Exceptions;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,31 +18,28 @@ namespace CodacyChallenge.Service.Implementations
             var commitList = new List<GitResponse>();
             Directory.CreateDirectory(tempDirectory);
 
-            try
+            using (PowerShell powershell = PowerShell.Create())
             {
-                using (PowerShell powershell = PowerShell.Create())
+                powershell.AddScript($"{GitCommand.Clone} {url} '{tempDirectory}'");
+                powershell.AddScript($"cd '{tempDirectory}'");
+                powershell.AddScript($"{GitCommand.Log} {GitCommand.PrettyFormat}");
+
+                var results = powershell.Invoke().ToList();
+
+                //This condition is because the powershell identify the clone command as an error and always return the "HadError" property as true
+                //so I need to validate if we have more than one error in our stream.
+                if (powershell.Streams.Error.Count > 1)
                 {
-                    //I need to put the ^^ so that I can replace it to double quotes after the PowerShell return my object because the it's scaping the double quotes... 
-                    var format = "{\"^^Commit^^\":\"^^%H^^\",\"^^Subject^^\":\"^^%s^^\",\"^^CommitNotes^^\":\"^^%N^^\",\"^^Author^^\":\"^^%aN^^\",\"^^Date^^\":\"^^%aD^^\"}";
-
-                    powershell.AddScript($"{GitCommand.Clone} {url} '{tempDirectory}'");
-                    powershell.AddScript($"cd '{tempDirectory}'");
-                    powershell.AddScript($"{GitCommand.Log} {GitCommand.PrettyFormat(format)}");
-
-                    var results = powershell.Invoke().ToList();
-                    results.ForEach(x =>
-                    {
-                        commitList.Add(JsonConvert.DeserializeObject<GitResponse>(x.ToString().Replace("^^", "\"")));
-                    });
+                    throw new CLIException(powershell.Streams);
                 }
+
+                results.ForEach(x =>
+                {
+                    commitList.Add(JsonConvert.DeserializeObject<GitResponse>(x.ToString().Replace("^^", "\"")));
+                });
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
+
             /*TODO: Need to remove the temporary folder from the disk.
-            //finally
-            //{
             //  
             //    if (Directory.Exists(tempDirectory))
             //    {
@@ -50,7 +47,7 @@ namespace CodacyChallenge.Service.Implementations
             //        dir.Attributes = FileAttributes.Normal;
             //        dir.Delete(true);
             //    }
-            }*/
+            */
 
             return Task.FromResult(commitList);
         }

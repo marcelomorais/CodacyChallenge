@@ -48,7 +48,7 @@ namespace CodacyChallenge.Application
                     });
                 }
 
-                Console.WriteLine($"\nThis Repository has a total of {commitList.Count} pages with {_configuration.ItemsPerPage} elements per page.");
+                Console.WriteLine($"\nThis Repository has a total of {commitList.Count} pages with max {_configuration.ItemsPerPage} elements per page.");
                 Console.WriteLine($"Enter the page number that you want to see or press N to go to the next page.");
                 Console.WriteLine($"You are in the page: {page}.\n");
 
@@ -80,7 +80,7 @@ namespace CodacyChallenge.Application
                 }
             }
 
-            page = keyPressed.Key == ConsoleKey.N ? page++ : result;
+            page = keyPressed.Key == ConsoleKey.N ? page + 1 : result;
         }
     }
 }

@@ -1,15 +1,14 @@
 ﻿using CodacyChallenge.Common.Enumerators;
 using CodacyChallenge.Common.Interfaces;
 using CodacyChallenge.Common.Models;
+using CodacyChallenge.Common.Models.Exceptions;
+using CodacyChallenge.Utils;
 using CodacyChallenge.Utils.Validators;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions;
-using CodacyChallenge.Utils;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace CodacyChallenge.API.Controllers
 {
@@ -26,7 +25,7 @@ namespace CodacyChallenge.API.Controllers
 
         // GET api/Git/Repo/Commits
         [HttpGet("Repo/Commits")]
-        public async Task<ActionResult<IEnumerable<string>>> AllCommits([FromQuery]RequestObject requestObject)
+        public async Task<ActionResult<IEnumerable<string>>> GetAllCommits([FromQuery]RequestObject requestObject)
         {
             if (!Validator.ValidateUrl(requestObject.RequestType, requestObject.Url))
             {
@@ -41,15 +40,23 @@ namespace CodacyChallenge.API.Controllers
 
                 return Ok(commitList.Paginate(requestObject));
             }
-            catch (HttpRequestException ex)
+            catch (HttpRequestException)
             {
-                var cliEngine = _gitEngine(RequestType.Shell);
+                var cliEngine = _gitEngine(RequestType.CLI);
 
                 var commitList = await cliEngine.GetAllCommits(requestObject.Url).ConfigureAwait(false);
 
                 return Ok(commitList.Paginate(requestObject));
             }
-            catch (Exception)
+            catch (CLIException ex)
+            {
+                return StatusCode(500, ex);
+            }
+            catch (KeyNotFoundException)
+            {
+                return BadRequest();
+            }
+            catch
             {
                 return StatusCode(500);
             }

@@ -1,8 +1,12 @@
-﻿namespace CodacyChallenge.Common.Interfaces
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CodacyChallenge.Common.Interfaces
 {
     public interface IPagination
     {
-        int PageNumber { get; }
-        int PageSize { get; }
+        int PageSize { get; set; }
+        int PageNumber { get; set; }
     }
 }
