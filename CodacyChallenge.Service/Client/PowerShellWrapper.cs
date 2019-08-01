@@ -7,12 +7,9 @@ namespace CodacyChallenge.Service.Client
     //Class built to isolate the GitCLIEngine so that can be completelly testable.
     public class PowershellWrapper : IPowershellWrapper
     {
-        private bool _hadErrors = _powerShell.HadErrors;
-        private List<ErrorRecord> _streamErrors = _powerShell.Streams?.Error?.ToList();
-
         private static PowerShell _powerShell;
-        public bool HadErrors { get => _hadErrors; set => this._hadErrors = value; }
-        public List<ErrorRecord> StreamErrors { get => _streamErrors; set => this._streamErrors = value; }
+        public bool HadErrors { get; set; }
+        public List<ErrorRecord> StreamErrors { get; set; }
 
         public PowershellWrapper()
         {
@@ -29,7 +26,10 @@ namespace CodacyChallenge.Service.Client
 
         public List<PSObject> Invoke()
         {
-            return _powerShell.Invoke().ToList();
+            var psList = _powerShell.Invoke().ToList();
+            this.HadErrors = _powerShell.HadErrors;
+            this.StreamErrors = _powerShell?.Streams?.Error?.ToList();
+            return psList;
         }
 
         public void Dispose()

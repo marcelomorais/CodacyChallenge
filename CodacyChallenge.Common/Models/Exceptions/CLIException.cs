@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 
 namespace CodacyChallenge.Common.Models.Exceptions
 {
     public class CLIException : Exception
     {
-        public string ErrorMessage { get; set; }
         public List<ErrorRecord> StreamErrors = new List<ErrorRecord>();
 
         public CLIException()

@@ -36,44 +36,49 @@ namespace CodacyChallenge.API.Controllers
 
             try
             {
-                var apiEngine = _gitEngine(requestObject.RequestType);
+                var response = await RunService(requestObject.RequestType, requestObject);
 
-                var commitList = await apiEngine.GetCommitsWithPagination(requestObject).ConfigureAwait(false);
-
-                var responseObject = commitList.Paginate(requestObject).ToResponseObject(requestObject);
-
-                //This line is only to filter and remove the null fields from the Json object.
-                var filteredResponse = JsonConvert.SerializeObject(responseObject);
-
-                return Ok(filteredResponse);
+                return Ok(response);
             }
             //If GitHub API return any error or exception we will go to git CLI to get the commit list
-            catch (HttpRequestException)
+            catch (Exception ex) when (ex is TimeoutException || ex is HttpRequestException)
             {
-                var cliEngine = _gitEngine(RequestType.CLI);
 
-                var commitList = await cliEngine.GetCommitsWithPagination(requestObject).ConfigureAwait(false);
+                try
+                {
+                    var response = await RunService(RequestType.CLI, requestObject);
 
-                var responseObject = commitList.Paginate(requestObject).ToResponseObject(requestObject);
+                    return Ok(response);
+                }
+                catch (CLIException x)
+                {
+                    return StatusCode(500, x.StreamErrors);
+                }
 
-                //This line is only to filter and remove the null fields from the Json object.
-                var filteredResponse = JsonConvert.SerializeObject(responseObject);
-
-                return Ok(filteredResponse);
-            }
-            catch (CLIException ex)
-            {
-                return StatusCode(500, ex);
             }
             catch (KeyNotFoundException ex)
             {
                 return BadRequest(ex);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, ex);
             }
 
+        }
+
+        private async Task<string> RunService(RequestType requestType, RequestObject requestObject)
+        {
+            var gitEngine = _gitEngine(requestType);
+
+            var commitList = await gitEngine.GetCommitsWithPagination(requestObject).ConfigureAwait(false);
+
+            var responseObject = commitList.Paginate(requestObject).ToResponseObject(requestObject);
+
+            //This line is only to filter and remove the null fields from the Json object.
+            var filteredResponse = JsonConvert.SerializeObject(responseObject);
+
+            return filteredResponse;
         }
 
     }

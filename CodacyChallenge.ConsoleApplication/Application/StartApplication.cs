@@ -25,7 +25,7 @@ namespace CodacyChallenge.Application
         }
         public async Task Execute(string url)
         {
-            Console.WriteLine("Pulling commits, it can take a few minutes...\n");
+            Console.WriteLine("Pulling commit list, it may take a few minutes...\n");
 
             _request.Url = url;
 
@@ -45,14 +45,15 @@ namespace CodacyChallenge.Application
 
             if (_request.PageNumber <= _totalPages)
             {
-                commitList.ForEach(x =>
+                paginatedCommits.ForEach(x =>
                 {
                     Console.WriteLine(JsonConvert.SerializeObject(x));
                 });
 
                 Console.WriteLine($"\nThis Repository has a total of {_totalPages} pages with max {_configuration.ItemsPerPage} elements per page.");
-                Console.WriteLine($"Enter the page number that you want to see or press N to go to the next page.");
                 Console.WriteLine($"You are in the page: {_request.PageNumber}.\n");
+                Console.WriteLine($"N - Next Page\nX - Exit\nOr enter the page number.");
+                Console.WriteLine($"Press X to exit.\n");
             }
             else
             {

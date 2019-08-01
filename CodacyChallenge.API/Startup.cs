@@ -37,9 +37,9 @@ namespace CodacyChallenge.API
             .Configure<GitHubEndpoints>(options => Configuration.GetSection("GitHubApi").Bind(options))
             .AddTransient<GitCLIEngine>()
             .AddTransient<GitAPIEngine>()
+            .AddSingleton<IPowershellWrapper, PowershellWrapper>()
             .AddSingleton<HttpClient>(new HttpClient())
             .AddSingleton<IApiClient, ApiClient>()
-            .AddSingleton<IPowershellWrapper, PowershellWrapper>()
             .AddSingleton<IHttpClientWrapper, HttpClientWrapper>()
             .AddTransient<Func<RequestType, IGitEngine>>(serviceProvider => key =>
             {

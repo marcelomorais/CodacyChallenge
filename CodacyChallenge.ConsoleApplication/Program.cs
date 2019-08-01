@@ -30,7 +30,7 @@ namespace CodacyChallenge.ConsoleApplication
             while (!Validator.ValidateUrl(RequestType.CLI, input))
             {
                 Console.WriteLine("Your Repository URL does not match with the requirements.");
-                Console.WriteLine("Please be sure that your URL is from a valid GitHub Repository and reopen the program.");
+                Console.WriteLine("Please be sure that your URL is from a valid GitHub Repository.");
 
                 input = Console.ReadLine();
             }

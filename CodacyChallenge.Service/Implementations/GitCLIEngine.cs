@@ -21,8 +21,9 @@ namespace CodacyChallenge.Service.Implementations
         //This Class will return a simplified version of the commits using the pretty format built on GitCommand class.
         public Task<List<GitResponse>> GetCommitsWithPagination(RequestObject request)
         {
-            var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             var commitList = new List<GitResponse>();
+
+            var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             Directory.CreateDirectory(tempDirectory);
 
             _powershell.AddScript($"{GitCommand.Clone} {request.Url} '{tempDirectory}'",
@@ -44,7 +45,6 @@ namespace CodacyChallenge.Service.Implementations
             {
                 commitList.Add(JsonConvert.DeserializeObject<GitResponse>(x.ToString().Replace("^^", "\"")));
             });
-
 
             /*TODO: Need to remove the temporary folder from the disk.
             //  

@@ -21,15 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - API", "1 - API", "{B4FF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Utils", "5 - Utils", "{1EFAA7EB-1BDD-4B7D-9252-6CBBE43A82B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodacyChallenge.API", "CodacyChallenge.API\CodacyChallenge.API.csproj", "{D2BB1FE2-9205-46CF-9294-005339F7C58C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodacyChallenge.API", "CodacyChallenge.API\CodacyChallenge.API.csproj", "{D2BB1FE2-9205-46CF-9294-005339F7C58C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodacyChallenge.API.Tests", "CodacyChallenge.API.Tests\CodacyChallenge.API.Tests.csproj", "{0DA4B34F-AFB7-42AA-B46B-E66AC86D3F3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodacyChallenge.API.Tests", "CodacyChallenge.API.Tests\CodacyChallenge.API.Tests.csproj", "{0DA4B34F-AFB7-42AA-B46B-E66AC86D3F3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodacyChallenge.ConsoleApplication.Tests", "CodacyChallenge.ConsoleApplication.Tests\CodacyChallenge.ConsoleApplication.Tests.csproj", "{E161ED10-EC36-4125-BE23-DAB69C973985}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodacyChallenge.Service.Tests", "CodacyChallenge.Service.Tests\CodacyChallenge.Service.Tests.csproj", "{B817342D-7AEF-4803-9393-19AAD583D9CA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodacyChallenge.Utils.Tests", "CodacyChallenge.Utils.Tests\CodacyChallenge.Utils.Tests.csproj", "{071B6572-E315-4D3F-A489-9314321A3C28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodacyChallenge.Service.Tests", "CodacyChallenge.Service.Tests\CodacyChallenge.Service.Tests.csproj", "{B817342D-7AEF-4803-9393-19AAD583D9CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,18 +57,10 @@ Global
 		{0DA4B34F-AFB7-42AA-B46B-E66AC86D3F3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DA4B34F-AFB7-42AA-B46B-E66AC86D3F3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DA4B34F-AFB7-42AA-B46B-E66AC86D3F3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E161ED10-EC36-4125-BE23-DAB69C973985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E161ED10-EC36-4125-BE23-DAB69C973985}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E161ED10-EC36-4125-BE23-DAB69C973985}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E161ED10-EC36-4125-BE23-DAB69C973985}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B817342D-7AEF-4803-9393-19AAD583D9CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B817342D-7AEF-4803-9393-19AAD583D9CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B817342D-7AEF-4803-9393-19AAD583D9CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B817342D-7AEF-4803-9393-19AAD583D9CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{071B6572-E315-4D3F-A489-9314321A3C28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{071B6572-E315-4D3F-A489-9314321A3C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{071B6572-E315-4D3F-A489-9314321A3C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{071B6572-E315-4D3F-A489-9314321A3C28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,9 +72,7 @@ Global
 		{9BCC8E68-AFBF-477D-85E7-75AE00133273} = {19D3D385-0584-4B6D-A99D-5E70730761CA}
 		{D2BB1FE2-9205-46CF-9294-005339F7C58C} = {B4FF9E0F-37D5-4FC5-924F-CAD75E6732A1}
 		{0DA4B34F-AFB7-42AA-B46B-E66AC86D3F3D} = {B4FF9E0F-37D5-4FC5-924F-CAD75E6732A1}
-		{E161ED10-EC36-4125-BE23-DAB69C973985} = {19D3D385-0584-4B6D-A99D-5E70730761CA}
 		{B817342D-7AEF-4803-9393-19AAD583D9CA} = {5128BFEA-1E12-400A-83F2-2D223B13B32F}
-		{071B6572-E315-4D3F-A489-9314321A3C28} = {1EFAA7EB-1BDD-4B7D-9252-6CBBE43A82B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AA4B27B-67BF-40EA-82E6-21E1C0D97988}
