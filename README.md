@@ -25,7 +25,8 @@ For this project you can configure the Page Size on config.json at CodacyChallen
 
  Request Example:
 
- Here is a example of request that you can run: "http://localhost:62932/api/git/repo/commits?url=https://github.com/marcelomorais/CodacyChallenge&requesttype=2"
+ Here is a example of request that you can run: 
+ "http://localhost:62932/api/git/repo/commits?url=https://github.com/marcelomorais/CodacyChallenge&requesttype=2&pageSize=20&pageNumber=1"
 
  Request Object:
  The request object has 5 properties, they are;
