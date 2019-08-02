@@ -1,6 +1,7 @@
 using CodacyChallenge.Common.Models;
 using CodacyChallenge.Common.Models.Exceptions;
 using CodacyChallenge.Service.Client;
+using CodacyChallenge.Service.Client.Interface;
 using CodacyChallenge.Service.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -18,8 +19,9 @@ namespace CodacyChallenge.Service.Tests
         {
             var request = new RequestObject { Url = string.Empty };
             var mockPowershell = new Mock<IPowershellWrapper>();
+            var mockCache = new Mock<IMemoryCacheWrapper>();
             mockPowershell.Setup(x => x.Invoke()).Returns(new List<PSObject> { new PSObject() });
-            var gitCLIEngine = new GitCLIEngine(mockPowershell.Object);
+            var gitCLIEngine = new GitCLIEngine(mockPowershell.Object, mockCache.Object);
 
             var response = await gitCLIEngine.GetCommitsWithPagination(request);
 
@@ -33,10 +35,11 @@ namespace CodacyChallenge.Service.Tests
         {
             var request = new RequestObject { Url = string.Empty };
             var mockPowershell = new Mock<IPowershellWrapper>();
+            var mockCache = new Mock<IMemoryCacheWrapper>();
             mockPowershell.Setup(x => x.Invoke()).Returns(new List<PSObject>());
             mockPowershell.SetupProperty(x => x.HadErrors, true);
             mockPowershell.SetupProperty(x => x.StreamErrors, new List<ErrorRecord>());
-            var gitCLIEngine = new GitCLIEngine(mockPowershell.Object);
+            var gitCLIEngine = new GitCLIEngine(mockPowershell.Object, mockCache.Object);
 
             var response = await gitCLIEngine.GetCommitsWithPagination(request);
         }

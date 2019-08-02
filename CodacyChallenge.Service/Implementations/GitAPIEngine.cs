@@ -22,8 +22,6 @@ namespace CodacyChallenge.Service.Implementations
 
         public async Task<List<GitResponse>> GetCommitsWithPagination(RequestObject request)
         {
-            var sha = string.Empty;
-
             var splittedUrl = request.Url.Split('/').ToList().TakeLast(2);
             var requestUrl = string.Concat(string.Format(_gitHubSettings.GetAllCommits, splittedUrl.FirstOrDefault(), splittedUrl.LastOrDefault()), $"?per_page={request.PageSize}&page={request.PageNumber}");
 

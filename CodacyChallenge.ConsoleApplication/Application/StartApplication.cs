@@ -1,12 +1,12 @@
 ﻿using CodacyChallenge.Common.Interfaces;
 using CodacyChallenge.Common.Models;
-using CodacyChallenge.ConsoleApplication.Configuration;
+using CodacyChallenge.Service.Client.Interface;
 using CodacyChallenge.Utils;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 
 namespace CodacyChallenge.Application
@@ -14,14 +14,15 @@ namespace CodacyChallenge.Application
     public class StartApplication : IStartApplication
     {
         private IGitEngine _gitEngine;
-        private Configuration _configuration;
         private RequestObject _request;
         private int _totalPages = 0;
-        public StartApplication(IOptions<Configuration> configuration, IGitEngine gitEngine)
+        private IMemoryCacheWrapper _cache;
+
+        public StartApplication(IGitEngine gitEngine, IMemoryCacheWrapper cache)
         {
-            _configuration = configuration.Value;
+            _cache = cache;
             _gitEngine = gitEngine;
-            _request = new RequestObject { PageSize = _configuration.ItemsPerPage, PageNumber = 1 };
+            _request = new RequestObject();
         }
         public async Task Execute(string url)
         {
@@ -29,13 +30,15 @@ namespace CodacyChallenge.Application
 
             _request.Url = url;
 
-            var commits = await _gitEngine.GetCommitsWithPagination(_request);
+            await _gitEngine.GetCommitsWithPagination(_request);
 
-            _totalPages = (commits.Count + _request.PageSize - 1) / _request.PageSize;
+            var cachedCommitList = _cache.Get<List<GitResponse>>(_request.Url);
 
-            if (commits.Any())
+            _totalPages = (cachedCommitList.Count + _request.PageSize - 1) / _request.PageSize;
+
+            if (cachedCommitList.Any())
             {
-                CallNextPage(commits);
+                CallNextPage(cachedCommitList);
             }
         }
 
@@ -50,7 +53,7 @@ namespace CodacyChallenge.Application
                     Console.WriteLine(JsonConvert.SerializeObject(x));
                 });
 
-                Console.WriteLine($"\nThis Repository has a total of {_totalPages} pages with max of {_configuration.ItemsPerPage} elements per page.");
+                Console.WriteLine($"\nThis Repository has a total of {_totalPages} pages with max of {_request.PageSize} elements per page.");
                 Console.WriteLine($"You are on the page: {_request.PageNumber}.\n");
                 Console.WriteLine($"N - Next Page\nX - Exit\nOr enter the page number.");
                 Console.WriteLine($"Press X to exit.\n");

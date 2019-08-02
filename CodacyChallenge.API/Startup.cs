@@ -3,6 +3,7 @@ using CodacyChallenge.Common.Enumerators;
 using CodacyChallenge.Common.Interfaces;
 using CodacyChallenge.Common.Models.Configuration;
 using CodacyChallenge.Service.Client;
+using CodacyChallenge.Service.Client.Interface;
 using CodacyChallenge.Service.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,8 +29,6 @@ namespace CodacyChallenge.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMemoryCache();
-
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -41,6 +40,7 @@ namespace CodacyChallenge.API
             .AddSingleton<HttpClient>(new HttpClient())
             .AddSingleton<IApiClient, ApiClient>()
             .AddSingleton<IHttpClientWrapper, HttpClientWrapper>()
+            .AddSingleton<IMemoryCacheWrapper>(x=> new MemoryCacheWrapper("MemoryCache"))
             .AddTransient<Func<RequestType, IGitEngine>>(serviceProvider => key =>
             {
                 switch (key)

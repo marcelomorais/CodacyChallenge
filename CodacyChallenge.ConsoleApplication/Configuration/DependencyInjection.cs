@@ -1,13 +1,13 @@
 ﻿using CodacyChallenge.Application;
 using CodacyChallenge.Common.Interfaces;
 using CodacyChallenge.Service.Client;
+using CodacyChallenge.Service.Client.Interface;
 using CodacyChallenge.Service.Implementations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.IO;
-using System.Net.Http;
 
 namespace CodacyChallenge.ConsoleApplication.Configuration
 {
@@ -16,13 +16,13 @@ namespace CodacyChallenge.ConsoleApplication.Configuration
         public ServiceProvider ServiceBuilder()
         {
             var configuration = ConfigurationBuilder();
-        
+
             var serviceProvider = new ServiceCollection()
           .AddOptions()
-          .Configure<Configuration>(options => configuration.GetSection("Config").Bind(options))
           .AddTransient<IGitEngine, GitCLIEngine>()
           .AddTransient<IStartApplication, StartApplication>()
           .AddSingleton<IPowershellWrapper, PowershellWrapper>()
+          .AddSingleton<IMemoryCacheWrapper>(x => new MemoryCacheWrapper("MemoryCache"))
           .BuildServiceProvider();
 
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
